@@ -1,60 +1,87 @@
 <!--
-    title: "Running analysis with UKB WES 470k"
-    description: "This is an introduction to how to run per-variant and per-gene association tests using WES 470K data on UKBB RAP."
+title: "Running analysis with UKB WES 470k"
+description: "This is an introduction to how to run per-variant and per-gene association tests using WES 470K data on UKBB RAP."
 -->
 
-<h2>Introduction</h2>
-<p>
-    This document provides a practical guide on running per-variant (ExWAS) and per-gene (gene-collapsing) association tests using UKB WES 470K data on the UKBB RAP for IC internal users.<br><br>
-    <strong>Prerequisites:</strong> Users should be familiar with using the UKB RAP via the command line interface (CLI).
-</p>
-<ul>
-    <li><a href="https://dnanexus.gitbook.io/uk-biobank-rap/working-on-the-research-analysis-platform/running-analysis">Tutorials for working on UKB RAP via CLI</a></li>
-    <li><a href="https://documentation.dnanexus.com/downloads">Tutorial for installing dxtoolkit (required for accessing CLI)</a></li>
-</ul>
+## Introduction
 
-<h2>Method Overview</h2>
-<p>
-    Three customised tools on RAP are available for IC internal users with access to <code>project-GyZxPF8JQkyq9JVxZjQ2FvqK</code> to run variant-level or gene-level association tests using WES 470K data.
-    For association test, we use <a href="https://rgcgithub.github.io/regenie/">regenie</a>.<br><br>
-    This guide provides step-by-step instructions for different analysis scenarios.<br>
-    To view detailed documentation for each tool, run the following commands in your command-line interface:<br><br>
-</p>
-<pre><code>
+This document provides a practical guide on running per-variant (ExWAS) and per-gene (gene-collapsing) association tests using UKB WES 470K data on the UKBB RAP for IC internal users.
+
+**Prerequisites:** Users should be familiar with using the UKB RAP via the command line interface (CLI).
+
+- [Tutorials for working on UKB RAP via CLI](https://dnanexus.gitbook.io/uk-biobank-rap/working-on-the-research-analysis-platform/running-analysis)
+- [Tutorial for installing dxtoolkit (required for accessing CLI)](https://documentation.dnanexus.com/downloads)
+
+## Method overview
+
+Three customised tools on RAP are available for IC internal users with access to `project-GyZxPF8JQkyq9JVxZjQ2FvqK` to run variant-level or gene-level association tests using WES 470K data.  
+For association tests, we use [regenie](https://rgcgithub.github.io/regenie/).
+
+This guide provides step-by-step instructions for different analysis scenarios.  
+To view detailed documentation for each tool, run the following commands in your command-line interface:
+
+```bash
 dx run app-ic-epid-regenie-step1 --help                         # The app for running regenie step 1
 dx run app-ic-epid-regenie-step2_per-gene-test --help           # The app for running regenie step 2, gene level association test 
 dx run app-ic-epid-regenie-step2_per-variant-test --help        # The app for running regenie step 2, variant level association test 
-</code></pre>
+```
 
-<p>
-    <strong>Required Input:</strong> Users must prepare a tab-delimited phenotype file as the minimum requirement to run all three tools.<br><br>
-    <ul>
-        <li>The phenotype file must contain either all binary traits or all quantitative traits, as regenie cannot process mixed phenotype types in a single run.</li>
-        <li>While the tools can theoretically handle multiple phenotypes, current configurations have only been tested with up to 3 phenotypes. Including more may lead to resource allocation issues.</li>
-    </ul>
-</p>
-<p>
-    Below is an example of the expected phenotype file format. The first two columns are FID and IID, which are required for regenie to identify individuals in the genotype data. The third column is the first phenotype, and the fourth and fifth columns are additional phenotypes.
-</p>
-<pre><code>
+**Required Input:** Users must prepare a tab-delimited phenotype file as the minimum requirement to run all three tools.
+
+- The phenotype file must contain either all binary traits or all quantitative traits, as regenie cannot process mixed phenotype types in a single run.
+- While the tools can theoretically handle multiple phenotypes, current configurations have only been tested with up to 3 phenotypes. Including more may lead to resource allocation issues.
+
+Below is an example of the expected phenotype file format. The first two columns are FID and IID, which are required for regenie to identify individuals in the genotype data. The third column is the first phenotype, and the fourth and fifth columns are additional phenotypes.
+
+```
 FID    IID    PHENO1    PHENO2    PHENO3
 1      1      1         0         0
 1      2      1         1         1
 1      3      0         0         0
-</code></pre>
+```
 
-<p>
-    Regenie's first step builds a whole-genome regression model that is computationally intensive. For initial exploratory analyses, this step can be skipped. However, for final results, predictions from step 1 should be included to adjust for population stratification and cryptic relatedness in the association tests.<br><br>
-    For details about other optional input files and their required formats, please run: <code>dx run app-name --help</code><br><br>
-    The following sub-sections provide example codes of how to run the apps for different analysis scenarios:
-</p>
-<ol>
-    <li>Quickly screen for gene-phenotype associations for a short list of genes: <strong>quick gene screening</strong></li>
-    <li>Run genome-wide gene-phenotype association test without step 1 for quick results: <strong>quick genome-wide gene-based test</strong></li>
-    <li>Run a genome-wide gene-based test with step 1 predictions for final results: <strong>gene-based association test including step1</strong></li>
-    <li>Run a genome-wide variant association test (ExWAS) with step 1 predictions for final results: <strong>variant level association test including step1</strong></li></li>
-</ol>
+Regenie's first step builds a whole-genome regression model that is computationally intensive. For initial exploratory analyses, this step can be skipped. However, for final results, predictions from step 1 should be included to adjust for population stratification and cryptic relatedness in the association tests.
 
-<p>
-    For further details about genotype data processing and methods, refer to the Common Q&amp;A section.
-</p>
+For details about other optional input files and their required formats, please run:  
+`dx run app-name --help`
+
+The following sub-sections provide example codes of how to run the apps for different analysis scenarios:
+
+1. Quickly screen for gene-phenotype associations for a short list of genes: [**quick gene screening**](#quick-gene-screening)
+2. Run genome-wide gene-phenotype association test without step 1 for quick results: **quick genome-wide gene-based test**
+3. Run a genome-wide gene-based test with step 1 predictions for final results: **gene-based association test including step1**
+4. Run a genome-wide variant association test (ExWAS) with step 1 predictions for final results: **variant level association test including step1**
+
+For further details about genotype data processing, gene-based test mask definitions, and results interpretations, please refer to [**quick gene screening**](quick-gene-screening/README.md).
+
+---
+
+### Quick gene screening
+
+The following example shows minimum input parameters to be defined by the user to run gene-based test without regenie step 1 input.
+
+To check details about format requirements for compulsory or optional input files and parameters, please run:
+
+```bash
+dx run app-ic-epid-regenie-step2_per-gene-test --help
+```
+
+Example code:
+
+```bash
+dx cd project-xxxxxxx                            # Please run this command in your own project directory 
+
+dx run app-regenie-step2_per-variant-test \    
+    --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
+    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --name JOBNAME \                               # Name of the job for monitoring and tracking 
+    -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
+    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_binary=true \                          # Compulsory user defined input: whether the phenotype(s) is binary or quantitative
+    -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, please use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
+    -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
+    -istep1_pred_included=false \                  # Compulsory user defined input: specify whether the step1 predictions are included. 
+    -igene_list=GENE1,GENE2,GENE3                  # Optional user defined input: Specify the gene(s) to be included in the gene-based test in a comma-separated format. 
+```
+
+**Notes:** To define the list of gene(s), either gene names (e.g. `BRCA1,BRCA2`) or gene Ensembl IDs (e.g. `ENSG00000012048,ENSG00000139618`) can be used.
