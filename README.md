@@ -26,18 +26,19 @@ dx run app-ic-epid-regenie-step2_per-gene-test --help           # The app for ru
 dx run app-ic-epid-regenie-step2_per-variant-test --help        # The app for running regenie step 2, variant level association test 
 ```
 
-**Required Input:** Users must prepare a tab-delimited phenotype file as the minimum requirement to run all three tools.
+**Required input:** Users must prepare a tab-delimited phenotype file as the minimum requirement to run any of the three tools. Uncompressed files are recommended, as regenie may encounter parsing issues with compressed .gz formats.
 
-- The phenotype file must contain either all binary traits or all quantitative traits, as regenie cannot process mixed phenotype types in a single run.
-- While the tools can theoretically handle multiple phenotypes, current configurations have only been tested with up to 3 phenotypes. Including more may lead to resource allocation issues.
+- If multiple phenotypes are included, the phenotype file must contain either all binary traits or all quantitative traits, as regenie cannot process mixed phenotype types in a single run.
+- Please notes the caveates in running multiple phenotypes as one job in regenie: [missing pattern among traits](https://rgcgithub.github.io/regenie/recommendations/). 
+- While the three tools can theoretically handle multiple phenotypes, current resource configurations have only been tested with up to 3 phenotypes. Including more may lead to resource allocation issues.
 
-Below is an example of the expected phenotype file format. The first two columns are FID and IID, which are required for regenie to identify individuals in the genotype data. The third column is the first phenotype, and the fourth and fifth columns are additional phenotypes.
+Below is an example of the expected phenotype file format. The first two columns are FID and IID. The third column is the first phenotype, and the fourth and fifth columns are additional phenotypes if multiple phenotypes are included.
 
 ```
 FID    IID    PHENO1    PHENO2    PHENO3
-1      1      1         0         0
-1      2      1         1         1
-1      3      0         0         0
+123    123      1         0         0
+456    456      1         1         1
+789    789      0         0         0
 ```
 
 Regenie's first step builds a whole-genome regression model that is computationally intensive. For initial exploratory analyses, this step can be skipped. However, for final results, predictions from step 1 should be included to adjust for population stratification and cryptic relatedness in the association tests.
@@ -162,7 +163,7 @@ file-XXXXXXXXXXX
 ```
 ---
 
-### genome-wide variant-level association test with step1 output
+#### genome-wide variant-level association test with step1 output
 
 The following example shows the **minimum** input parameters to be defined by the user to run gene-based test without regenie step 1 input.
 
