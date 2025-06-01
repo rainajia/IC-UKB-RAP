@@ -21,14 +21,14 @@ Factors that will affect run time and cost:
 </details>
     
 <details>
-<summary>2. <strong>How are the raw data quality checked?</strong></summary>
+<summary>2. <strong>How has the raw data been quality checked</strong></summary>
 
     Please refer to the method documentation file in Word ([link to wiki page; gene_based_test_method.doc]) (access for IC internal users only).
     Quality control steps include checks for sample and variant missingness, Hardy-Weinberg equilibrium, sex discrepancies, and relatedness. Additional filters may be applied as described in the method documentation.
 </details>
 
 <details>
-<summary>3. <strong>What are the definitions of gene "masks" used in the gene-based test?</strong></summary>
+<summary>3. <strong>For the gene-based test, how has the variants been annotated, and what are the definitions used for gene "masks"?</strong></summary>
     
     Please refer to the method documentation file in Word ([link to wiki page; gene_based_test_method.doc]) (access for IC internal users only).
     
