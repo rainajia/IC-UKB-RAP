@@ -88,12 +88,12 @@ Factors that will affect run time and cost:
 <details>
 <summary>6. <strong>How do you interpret the columns from the gene-based test output?</strong></summary>
 
-The output columns can be interpreted as follows. Note that the user needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
+   The output columns can be interpreted as follows. Note that the user needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
 
-| Column Name         | Description                |
-|---------------------|---------------------------|
-| *[example1.txt]*    | *[Description 1]*         |
-| *[example2.txt]*    | *[Description 2]*         |
+   | Column Name         | Description                |
+   |---------------------|---------------------------|
+   | *[example1.txt]*    | *[Description 1]*         |
+   | *[example2.txt]*    | *[Description 2]*         |
 
    *(Replace with actual column names and descriptions)*
 </details>
