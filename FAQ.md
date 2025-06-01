@@ -48,7 +48,7 @@ Factors that will affect run time and cost:
 </details>
 
 <details>
-<summary>5. <strong>What output files should I expect to get from each tool?/strong></summary>
+<summary>5. <strong>What output files should I expect to get from each tool?</strong></summary>
 
     The output files from each tool follow the formats below:
 
