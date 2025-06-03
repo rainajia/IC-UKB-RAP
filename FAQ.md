@@ -18,52 +18,56 @@ The estimated cost for the default setting using ~400K white European ancestry a
   **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. 
 
 Factors that will affect run time and cost:
-  i. ***Definition for "job priority" will affect cost:***
-    - Low priority is recommended for gene-based tests as a start.
-    - High priority is recommended for step 1 and step 2, unless the job is ran a sample <100K.
 
-  ii. ***Sample size will affect runtime and cost:***
-    - Smaller samples will run quicker.
+***Definition for "job priority" will affect cost:***
+  - Low priority is recommended for gene-based tests as a start.
+  - High priority is recommended for step 1 and step 2, unless the job is ran a sample <100K.
 
-  iii. ***Number of phenotypes included in one job***
-    - Regenie allows mutliple phenotypes to be included in one job as a means to improve computation efficiency, however, increasing the phenotypes will non-linearly affect the runtime, especitally for regenie step 1. Please note that the current app resource configuration has not been tested in a job with more than 3 phenotypes. 
+***Sample size will affect runtime and cost:***
+  - Smaller samples will run quicker.
+
+***Number of phenotypes included in one job***
+  - Regenie allows mutliple phenotypes to be included in one job as a means to improve computation efficiency, however, increasing the phenotypes will non-linearly affect the runtime, especitally for regenie step 1. Please note that the current app resource configuration has not been tested in a job with more than 3 phenotypes. 
   
-  iv. ***For gene-based test, gene-specific jobs will be quick to run***
-    - If a list of genes are provided, the step2 gene-based test will be quicker to run 
+***For gene-based test, gene-specific jobs will be quick to run***
+  - If a list of genes are provided, the step2 gene-based test will be quicker to run 
 
 </details>
 
 <details>
-<summary>2. <strong>What quality checkes has been done for the raw seuqencing data? </strong></summary> 
-  Please refer to the method documentation file [method.dox link to be added] (access for IC internal users only).
+<summary>2. <strong> What quality checkes has been done for the raw seuqencing data? </strong></summary> 
+  Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
+
 </details>
 
 <details>
-  <summary>3. <strong> In the gene-based tests, how are the gene "masks" been defined?</strong></summary>
-  Please refer to the method documentation file in Word [method.dox link to be added] (access for IC internal users only).
+  <summary>3. <strong> In the gene-based tests, how are the gene "masks" defined?</strong></summary>
+  Please refer to the method documentation file in Word [method.doc link to be added] (access for IC internal users only).
+
 </details>
 
 <details>
-  <summary>4. <strong>How do I know what are the default input files used in the app and whether I can change them?</strong></summary>
+  <summary>4. <strong>How do I know what are the default input files that has been used in the app, and whether I can change them?</strong></summary>
 
-For regenie step 1 genotype file input, the default genotype input file can optionally be changed to user-defined genotype files in BGEN format, using the following options:
+For regenie step 1 genotype file input (QCed genotype array data in GRCh38), the default genotype input file can be optionally changed to user-defined genotype files in BGEN format, using the following options:
 
   ```
     -igenotype_bgen_file
     -igenotype_sample_file
   ```
 
-For regenie step 2 genotype file input, the default genotype file in PGEN format is hardcoded into the app. File IDs can be viewed in the app script in the `scripts/` folder in this repository. Only authorised users will be able to view/use these files.
+For regenie step 2 genotype file input (QCed WES data in GRCh38), the default genotype file in PGEN format is hardcoded into the app. File IDs can be viewed in the scripts shared in the `scripts/` folder in this repository. Only authorised users will be able to use these files from antoher proejct directory.
 
-For both regenie step 1 and 2, the following files can also be optionally modified:
-    - Covariate file
+For both regenie step 1 and 2, the following files can also be optionally modified when running the apps:
+    - Covariate file 
     - Sample inclusion file (**Note:** the default is to use the white EU ancestry only)
 
-For detailed information, please see:
+For detailed information about optional parameters within the three apps, please see:
 
   ```bash
     dx run app-name --help
   ```
+
 </details>
 
 <details>
@@ -80,8 +84,8 @@ regenie_step1
   | `${output_file_prefix}.log`       | Log file for the job run                            |
 
 **Notes**:
-  - If multiple phenotypes are included, each phenotype will be saved as a separate '.loco' file in the format: for ***P*** phenotypes, there will be  `${output_file_prefix}_1.loco,${output_file_prefix}_2.loco, ${output_file_prefix}_3.loco, ${output_file_prefix}_P.loco` output files.
-  -
+  - If multiple phenotypes are included, each phenotype will be saved as a separate '.loco' file in the format: for ***P*** phenotypes, there will be `${output_file_prefix}_1.loco,${output_file_prefix}_2.loco, ${output_file_prefix}_3.loco, ${output_file_prefix}_P.loco` output files.
+
 
 regenie_step2 per-variant or per-gene tests
 
@@ -94,6 +98,7 @@ regenie_step2 per-variant or per-gene tests
 **Notes**:
   - If multiple phenotypes are included, each phenotype will be saved as a separate '.regenie' file. Each job will only have 1 .log file and one .snplist file. 
   - If a list of genes are provided for the gene-based test, the output file name will be the same with the association test results for only the genes defined. 
+
 </details>
 
 <details>
@@ -116,6 +121,7 @@ regenie_step2 per-variant or per-gene tests
    | CHISQ   | Chi-squared test |
    | LOG10P  | -log10(P)        |
    | P | p-value |
+
 </details>
 
 <details>
