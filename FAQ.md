@@ -19,30 +19,20 @@ Factors that will affect run time and cost:
   iii. **Number of phenotypes included in one job will non-linearly affect the runtime for regenie step 1.**
 
 </details>
-    
-2.  **How are the raw data quality checked?**  
-    Please refer to the method documentation file in Word ([link to wiki page; gene_based_test_method.doc]) (access for IC internal users only).
 
-3. **What are the definitions of gene "masks" used in the gene-based test?**  
+<details>
+<summary>2. <strong>How are the raw data quality checked? </strong></summary> 
     Please refer to the method documentation file in Word ([link to wiki page; gene_based_test_method.doc]) (access for IC internal users only).
-
-4. **How do I know what are the default input files used in the app and whether I can change them?**  
-    <details>
-    <summary>2. <strong>How are the raw data quality checked?</strong></summary>
-
-    Please refer to the method documentation file in Word ([link to wiki page; gene_based_test_method.doc]) (access for IC internal users only).
-    Quality control steps include checks for sample and variant missingness, Hardy-Weinberg equilibrium, sex discrepancies, and relatedness. Additional filters may be applied as described in the method documentation.
 </details>
 
-    <details>
-    <summary>3. <strong>What are the definitions of gene "masks" used in the gene-based test?</strong></summary>
-
+<details>
+  <summary>3. <strong>What are the definitions of gene "masks" used in the gene-based test?</strong></summary>
     Please refer to the method documentation file in Word ([link to wiki page; gene_based_test_method.doc]) (access for IC internal users only).
 
-    </details>
+</details>
 
-    <details>
-    <summary>4. <strong>How do I know what are the default input files used in the app and whether I can change them?</strong></summary>
+<details>
+  <summary>4. <strong>How do I know what are the default input files used in the app and whether I can change them?</strong></summary>
 
     For regenie step 1 genotype file input, the default genotype input file can optionally be changed to user-defined genotype files in BGEN format, using the `-igenotype_bgen_file` and `-igenotype_sample_file` options.  
     For regenie step 2 genotype file input, the default genotype file in PGEN format is hardcoded into the app. File IDs can be viewed in the app script in the `scripts/` folder in this repository. Only authorised users will be able to view these files.
@@ -55,11 +45,10 @@ Factors that will affect run time and cost:
     ```
     dx run app-name --help
     ```
+</details>
 
-    </details>
-
-    <details>
-    <summary>5. <strong>What output files should I expect to get from each tool?</strong></summary>
+<details>
+  <summary>5. <strong>What output files should I expect to get from each tool?</strong></summary>
 
     The output files from each tool follow the formats below:
 
@@ -83,7 +72,7 @@ Factors that will affect run time and cost:
     ```
     dx run app-name --help
     ```
-    </details>
+</details>
 
 <details>
 <summary>6. <strong>How do you interpret the columns from the gene-based test output?</strong></summary>
