@@ -29,7 +29,7 @@ Factors that will affect run time and cost:
 ***Number of phenotypes included in one job***
   - Regenie allows mutliple phenotypes to be included in one job as a means to improve computation efficiency, however, increasing the phenotypes will non-linearly affect the runtime, especitally for regenie step 1. Please note that the current app resource configuration has not been tested in a job with more than 3 phenotypes. 
   
-***For gene-based test, gene-specific jobs with a defined list of genes will be quick to run than genome-wide jobs***
+***For gene-based test, gene-specific jobs with a defined list of genes will be significantly quicker to run than genome-wide jobs***
   - If a list of genes are provided, the step2 gene-based test will be quicker to run 
 
 
