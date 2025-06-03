@@ -57,8 +57,12 @@ The following sub-sections provide example codes of how to run the apps for diff
 
 For further details about runtime and cost, data processing, gene-based test methods, and results interpretations, please refer to [**FAQ**](FAQ.md)
 
-<span style="color:red">**IMPORTANT:** Please do not run analysis in project `project-GyZxPF8JQkyq9JVxZjQ2FvqK`, this is the project direcotry where the pipeline input and intermediate files are stored.
-For any files stored in this project (e.g. QCed genotype array data) that you want to use in your own analysis, please set up your own project, then in the scrip, you can access the files in this project by using either ``project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-XXXXXXXXXX`` or ``project-GyZxPF8JQkyq9JVxZjQ2FvqK:/FULL_PATH/FILE_NAME`` in your own script. Please do **not** attemp to `mv` or `cp` any of the files from this directory.
+
+**IMPORTANT:** Please do not run analysis in project `project-GyZxPF8JQkyq9JVxZjQ2FvqK`, this is the project directory where the pipeline input and intermediate files are stored.
+For any files stored in this project (e.g. QCed genotype array data) that you want to use in your own analysis, please set up your own project, then in the scrip, you can access the files in this project by using either 
+``project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-XXXXXXXXXX`` or 
+``project-GyZxPF8JQkyq9JVxZjQ2FvqK:/FULL_PATH/FILE_NAME`` in your script to refer to the files stored in `project-GyZxPF8JQkyq9JVxZjQ2FvqK`. 
+Please do **not** attemp to `mv` or `cp` any of the files from this directory.
 
 
 ---
