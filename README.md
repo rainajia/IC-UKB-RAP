@@ -60,9 +60,8 @@ For further details about runtime and cost, data processing, gene-based test met
 
 **IMPORTANT:** Please do not run analysis in project `project-GyZxPF8JQkyq9JVxZjQ2FvqK`, this is the project directory where the pipeline input and intermediate files are stored.
 
-For any files stored in this project that you want to use in your own analysis ((e.g. QCed genotype array files for GWAS), please set up your own project, then in the scrip, you can access the files in this project by using either 
-``project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-XXXXXXXXXX`` or 
-``project-GyZxPF8JQkyq9JVxZjQ2FvqK:/FULL_PATH/FILE_NAME``.
+For any files stored in this project that you want to use for your own analysis (e.g. if you want to use the QCed genotype array files for GWAS), please set up your own project, then in your script, you can access the files in this project by refering to it by either file ID: 
+`project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-XXXXXXXXXX`, or by defining the full path: `project-GyZxPF8JQkyq9JVxZjQ2FvqK:/FULL_PATH/FILE_NAME`.
 
 Please do **not** attempt to `mv` or `cp` any of the files from this project.
 
