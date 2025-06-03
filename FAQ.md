@@ -74,5 +74,3 @@ Factors that will affect run time and cost:
 
    *(Replace with actual column names and descriptions)*
 </details>
-
-
