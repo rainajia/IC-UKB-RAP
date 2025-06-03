@@ -211,7 +211,7 @@ dx run app-regenie-step2_per-variant-test \
 
 ```
 
-**Notes:** If a single phenotype is included, the ```-istep1_file_loco_one_pheno``` needs to be used with one input file (the *_1.loco file from step1, see [**FAQ**](FAQ.md) for regenie output file nomenclatures). If *P* penotype(s) are included, the ```-istep1_file_loco_one_pheno`` flag needs to be used with one .txt file as the input, where the list of "*_1.loco, *_2.loco...*_P.loco" files are saved as a list of file IDs: 
+**Notes:** If a single phenotype is included, the `-istep1_file_loco_one_pheno` needs to be used with one input file (the *_1.loco file from step1, see [**FAQ**](FAQ.md) for regenie output file nomenclatures). If *P* penotype(s) are included, the `-istep1_file_loco_one_pheno` flag needs to be used with one .txt file as the input, where the list of "*_1.loco, *_2.loco...*_P.loco" files are saved as a list of file IDs: 
 
 ```
 file-XXXXXXXXXXX
