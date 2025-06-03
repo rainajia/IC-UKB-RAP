@@ -1,7 +1,7 @@
 # FAQ
 
 <details>
-<summary>1. <strong>What are the expected cost and runtime for step 1 and step 2?</strong></summary>
+<summary><strong>1. What are the expected cost and runtime for step 1 and step 2?</strong></summary>
 
 The estimated cost for the default setting using ~400K white European ancestry are as the follows: 
 
@@ -37,21 +37,23 @@ Factors that will affect run time and cost:
 
 
 <details>
-<summary>2. <strong> What quality checkes has been done for the raw seuqencing data? </strong></summary> 
-  Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
+<summary><strong>2. What quality checkes has been done for the raw seuqencing data? </strong></summary> 
+
+Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
 
 </details>
 
 <details>
-  <summary>3. <strong> In the gene-based tests, how are the gene "masks" defined?</strong></summary>
-  Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
+  <summary><strong>3. In the gene-based tests, how are the gene "masks" defined?</strong></summary>
+
+Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
 
 
 </details>
 
 
 <details>
-  <summary>4. <strong>How do I know what are the default input files that has been used in the app, and whether I can change them?</strong></summary>
+   <summary><strong>4. How do I know what are the default input files that has been used in the app, and whether I can change them?</strong></summary>
 
 For regenie step 1 genotype file input (QCed genotype array data in GRCh38), the default genotype input file can be optionally changed to user-defined genotype files in BGEN format, using the following options:
 
@@ -77,7 +79,7 @@ For detailed information about optional parameters within the three apps, please
 
 
 <details>
-  <summary>5. <strong>What output files should I expect to get from each tool?</strong></summary>
+  <summary><strong>5. What output files should I expect to get from each tool?</strong></summary>
 
 The output files from each tool follow the naming formats below. For more information regarding regenie output files, please refer to regenie documentations. 
 
@@ -110,7 +112,7 @@ regenie_step2 per-variant or per-gene tests
 
 
 <details>
-<summary>6. <strong>For the gene-based test, how do I interpret the columns from the regenie output?</strong></summary>
+<summary><strong>6. For the gene-based test, how do I interpret the columns from the regenie output?</strong></summary>
 
   The output columns can be interpreted as the follows. Note that the user needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
 
@@ -135,7 +137,7 @@ regenie_step2 per-variant or per-gene tests
 
 
 <details>
-<summary>7. <strong>For the gene-based test, how can I know the total number of carriers/the number of homozygous carriers/the number of heterozygous carriers for the variants included in a mask?</strong></summary>
+<summary><strong>7. For the gene-based test, how can I know the total number of carriers/the number of homozygous carriers/the number of heterozygous carriers for the variants included in a mask?</strong></summary>
 
 We currently do not have a dedicated tool for obtaining this information. However, you can extract it by following the general steps below on RAP, using either SwissArmyKnife or CloudWorkStation (recommended if you only have a short list of variants):
 
