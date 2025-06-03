@@ -57,7 +57,8 @@ The following sub-sections provide example codes of how to run the apps for diff
 
 For further details about runtime and cost, data processing, gene-based test methods, and results interpretations, please refer to [**FAQ**](FAQ.md)
 
-**IMPORTANT:** Please do not run analysis in project `project-GyZxPF8JQkyq9JVxZjQ2FvqK` — the project direcotry where the pipeline input and intermediate files are stored. For any files stored in this project that you want to use for your own analysis jobs, you should access them by using ``project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-XXXXXXXXXX``. Please do **not** attemp to `mv` or `cp` any of the files from this directory.
+<span style="color:red">**IMPORTANT:** Please do not run analysis in project `project-GyZxPF8JQkyq9JVxZjQ2FvqK`, this is the project direcotry where the pipeline input and intermediate files are stored.
+For any files stored in this project (e.g. QCed genotype array data) that you want to use in your own analysis, please set up your own project, then in the scrip, you can access the files in this project by using either ``project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-XXXXXXXXXX`` or ``project-GyZxPF8JQkyq9JVxZjQ2FvqK:/FULL_PATH/FILE_NAME`` in your own script. Please do **not** attemp to `mv` or `cp` any of the files from this directory.
 
 
 ---
@@ -86,7 +87,7 @@ dx run app-regenie-step2_per-variant-test \
     -igene_list=GENE1,GENE2,GENE3                  # Optional user defined input: Specify the gene(s) to be included in the gene-based test in a comma-separated format. 
 ```
 
-**Notes:** To define the list of gene(s), either gene names (e.g. `BRCA1,BRCA2`) or gene Ensembl IDs (e.g. `ENSG00000012048,ENSG00000139618`) can be used.
+**Notes:** To define the list of gene(s), either gene names (e.g. `-igene_list=BRCA1,BRCA2`) or gene Ensembl IDs (e.g. `-igene_list=ENSG00000012048,ENSG00000139618`) can be used.
 
 ---
 

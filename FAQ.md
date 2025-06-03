@@ -6,14 +6,14 @@
 The estimated cost for the default setting using ~400K white European ancestry are as the follows: 
 
 - For regenie_step1 using the followings:
-  High priority job: £1.8-£2.5, ~7.5 hours 
+  High priority job: £1.8-£2.5, 7-8 hours 
   Low priority job: £0.5-£1.5, >8 hours (risk of spot instance interruptions)
   **Recommendations**: Start with high priority to avoid spot instance interruptions since the job is long.  
 
 - For step 2 genome-wide gene-based test:
   
 - For step 2 genome-wide per-variant test:
-  High priority: £1.8-£2.5, ~4.5 hours
+  High priority: £1.8-£2.5, 4-5 hours
   Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)
   **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. 
 
@@ -69,15 +69,19 @@ For detailed information, please see:
 <details>
   <summary>5. <strong>What output files should I expect to get from each tool?</strong></summary>
 
-The output files from each tool follow the formats below:
+The output files from each tool follow the naming formats below. For more information regarding regenie output files, please refer to regenie documentations. 
 
 regenie_step1
 
-  | File Name         | Description               |
-  |-------------------|---------------------------|
-  | _pred.list  | *[Description 1]*         |
-  | *[example2.txt]*  | *[Description 2]*         |
+  | File Name                        | Description                                         |
+  |----------------------------------|-----------------------------------------------------|
+  | `${output_file_prefix}_pred.list` | Contains a list of the `.loco` files to use for step 2 |
+  | `${output_file_prefix}_1.loco`    | Contains the phenotype predictions                  |
+  | `${output_file_prefix}.log`       | Log file for the job run                            |
 
+**Notes**:
+  - If multiple phenotypes are included, each phenotype will be saved as a separate '.loco' file in the format: for ***P*** phenotypes, there will be  `${output_file_prefix}_1.loco,${output_file_prefix}_2.loco, ${output_file_prefix}_3.loco, ${output_file_prefix}_P.loco` output files.
+  -
 
 regenie_step2 per-variant or per-gene tests
 
@@ -87,18 +91,46 @@ regenie_step2 per-variant or per-gene tests
   | `${output_file_prefix}_autosomes.log`                            | Log file for the association test run               |
   | `${output_file_prefix}_autosomes_masks.snplist`                  | List of variants in each defined mask for downstream analysis |
 
-**Notes**: If multiple phenotypes are included, each phenotype will have a separate '.regenie' file. Each job will only have 1 .log file and one .snplist file. 
-
+**Notes**:
+  - If multiple phenotypes are included, each phenotype will be saved as a separate '.regenie' file. Each job will only have 1 .log file and one .snplist file. 
+  - If a list of genes are provided for the gene-based test, the output file name will be the same with the association test results for only the genes defined. 
 </details>
 
 <details>
-<summary>6. <strong>How do you interpret the columns from the gene-based test output?</strong></summary>
+<summary>6. <strong>For the gene-based test, how do I interpret the columns from the regenie output?</strong></summary>
 
-  The output columns can be interpreted as follows. Note that the user needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
+  The output columns can be interpreted as the follows. Note that the user needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
 
    | Column Name         | Description                |
    |---------------------|---------------------------|
-   | *[example1.txt]*    | *[Description 1]*         |
-   | *[example2.txt]*    | *[Description 2]*         |
+   | SYMBOL   | gene name         |
+   | GENE    | Ensembl  gene ID         |
+   | CHROM   | chromosome of the gene   |
+   | GENPOS  | the transcription start site of the gene |
+   | MASK    | the pre-defined masks for collapsing variants   |
+   | MAF     | the pre-defined minor allele frequency threshold: singletons, 0.1% |
+   | TEST    | the collapsing methods used: burden, SKAT, SKTA-O |
+   | N       | total sample size |
+   | BETA    | coeffient estimat, note this is log(odd) if binary trait |
+   | SE      | standard error |
+   | CHISQ   | Chi-squared test |
+   | LOG10P  | -log10(P)        |
+   | P | p-value |
+</details>
+
+<details>
+<summary>7. <strong>For the gene-based test, how can I know the total number of carriers/the number of homozygous carriers/the number of heterozygous carriers for the variants included in a mask?</strong></summary>
+
+We currently do not have a ready-made tool for acquiring this information, however, you could extract these information by following the general steps below on RAP using SwissArmyKnife or CloudWorkStation (if only a short list of variants are involved):
+
+1. For your gene mask of interest, extract the list of variants included in the mask from the `_masks.snplist` file in the regenie output.
+2. Retrieve these variants from the QCed WES data in PGEN format, located at: `project-GyZxPF8JQkyq9JVxZjQ2FvqK:/filtered/`.
+3. Convert the extracted variants from PGEN format to VCF format.
+4. Use `bcftools +fill-tags` to annotate the VCF file with relevant information. For example:
+  ```
+  bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz -- -t AC,AF,MAF,AC_Hom,AC_Het,AC_Hemi
+  ```
+5. This will add annotations such as allele count (AC), allele frequency (AF), minor allele frequency (MAF), homozygous allele count (AC_Hom), heterozygous allele count (AC_Het), and hemizygous allele count (AC_Hemi) for each variant in the VCF file.
+6. For easier further analysis, you could extract the relevant fields from the annotated VCF and save them as a text file using `bcftools query -f`.
 
 </details>
