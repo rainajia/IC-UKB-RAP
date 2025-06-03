@@ -14,10 +14,11 @@ This document provides a practical guide on running per-variant (ExWAS) and per-
 
 ## Method overview
 
-Three customised tools on RAP are available for IC internal users with access to `project-GyZxPF8JQkyq9JVxZjQ2FvqK` to run variant-level or gene-level association tests using WES 470K data.  
+Three customised tools on RAP are available for IC internal users with access to `project-GyZxPF8JQkyq9JVxZjQ2FvqK` to run variant-level or gene-level association tests using WES 470K data.
+
 For association tests, we use [regenie](https://rgcgithub.github.io/regenie/).
 
-This guide provides step-by-step instructions for different analysis scenarios.  
+This guide provides step-by-step instructions for different analysis scenarios using three customised tools on RAP. 
 To view detailed documentation for each tool, run the following commands in your command-line interface:
 
 ```bash
@@ -26,7 +27,8 @@ dx run app-ic-epid-regenie-step2_per-gene-test --help           # The app for ru
 dx run app-ic-epid-regenie-step2_per-variant-test --help        # The app for running regenie step 2, variant level association test 
 ```
 
-**Required input:** Users must prepare a tab-delimited phenotype file as the minimum requirement to run any of the three tools. Uncompressed files are recommended, as regenie may encounter parsing issues with compressed .gz formats.
+**Required input:** Users must prepare a tab-delimited phenotype file as the minimum input to run the three tools above. 
+Saving the phenotype file as uncompressed .txt or .tsv is recommended, as regenie may encounter parsing issues with compressed .gz format.
 
 - If multiple phenotypes are included, the phenotype file must contain either all binary traits or all quantitative traits, as regenie cannot process mixed phenotype types in a single run.
 - Please notes the caveates in running multiple phenotypes as one job in regenie: [missing pattern among traits](https://rgcgithub.github.io/regenie/recommendations/). 
@@ -69,14 +71,14 @@ To check details about the compulsory or optional flags, and user input file for
 Example code:
 
 ```bash
-dx cd project-xxxxxxx                              # navigate to your project directory 
+dx cd project-zzzzzz                               # navigate to your project directory 
 
 dx run app-regenie-step2_per-variant-test \    
     --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
-    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --destination project-zzzzzz:/OUTPUT_PATH/ \   # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
     --name JOBNAME \                               # Name of the job for monitoring and tracking 
     -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
-    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_file=project-zzzzzz:file-zzzzzz  \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
     -ipheno_binary=true \                          # Compulsory user defined input: whether the phenotype(s) is binary or quantitative
     -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
     -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
@@ -97,14 +99,14 @@ To check details about the compulsory or optional flags, and user input file for
 Example code:
 
 ```bash
-dx cd project-xxxxxxx                              # navigate to your project directory 
+dx cd project-zzzzzz                               # navigate to your project directory 
 
 dx run app-regenie-step2_per-gene-test \    
     --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
-    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --destination project-zzzzzz:/OUTPUT_PATH/ \   # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
     --name JOBNAME \                               # Name of the job for monitoring and tracking 
     -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
-    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_file=project-zzzzzz:file-zzzzzz \      # Compulsory user defined input: input phenotype file with either full file path, or file ID    
     -ipheno_binary=true \                          # Compulsory user defined input: whether the phenotype(s) is binary or quantitative
     -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
     -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
@@ -123,34 +125,34 @@ To check details about the compulsory or optional flags, and user input file for
 Example code:
 
 ```bash
-dx cd project-xxxxxxx                              # navigate to your project directory 
+dx cd project-zzzzzz                               # navigate to your project directory 
 
 dx run app-regenie-step1 \    
     --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
-    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --destination project-zzzzzz:/OUTPUT_PATH/ \   # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
     --name JOBNAME \                               # Name of the job for monitoring and tracking 
     -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
-    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_file=project-zzzzzz:file-zzzzzz \      # Compulsory user defined input: input phenotype file with either full file path, or file ID    
     -ipheno_binary=true \                          # Compulsory user defined input: whether the phenotype(s) is binary or quantitative
     -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, please use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
     -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
     -istep1_pred_included=true \                  
-    -istep1_file_pred=file-J0p548QJVqYqVxqQkvB49Jvx \             # Compulsory user defined input: specify whether the step1 predictions are included.
-    -istep1_file_loco_multi_pheno=file-J0pfbj8JQkyxg4b985gp8YXq   # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_pred=file-zzzzzz \                # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_loco_multi_pheno=file-zzzzzz      # Compulsory user defined input: specify whether the step1 predictions are included.
 
 
 dx run app-regenie-step2_per-gene-test \    
     --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
-    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --destination project-zzzzzz:/OUTPUT_PATH/ \   # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
     --name JOBNAME \                               # Name of the job for monitoring and tracking 
     -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
-    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_file=project-zzzzzz:file-zzzzzz \      # Compulsory user defined input: input phenotype file with either full file path, or file ID    
     -ipheno_binary=true \                          # Compulsory user defined input: whether the phenotype(s) is binary or quantitative
     -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, please use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
     -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
     -istep1_pred_included=true \                  
-    -istep1_file_pred=file-J0p548QJVqYqVxqQkvB49Jvx \             # Compulsory user defined input: specify whether the step1 predictions are included.
-    -istep1_file_loco_multi_pheno=file-J0pfbj8JQkyxg4b985gp8YXq   # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_pred=file-zzzzzz \                # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_loco_multi_pheno=file-zzzzzz      # Compulsory user defined input: specify whether the step1 predictions are included.
 
 ```
 
@@ -172,34 +174,34 @@ To check details about the compulsory or optional flags, and user input file for
 Example code:
 
 ```bash
-dx cd project-xxxxxxx                              # navigate to your project directory 
+dx cd project-zzzzzz                               # navigate to your project directory 
 
 dx run app-regenie-step1 \    
     --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
-    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --destination project-zzzzzz:/OUTPUT_PATH/ \   # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
     --name JOBNAME \                               # Name of the job for monitoring and tracking 
     -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
-    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_file=project-zzzzzz:file-zzzzzz \      # Compulsory user defined input: input phenotype file with either full file path, or file ID    
     -ipheno_binary=true \                          # Compulsory user defined input: whether the phenotype(s) is binary or quantitative
     -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, please use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
     -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
     -istep1_pred_included=true \                  
-    -istep1_file_pred=file-J0p548QJVqYqVxqQkvB49Jvx \             # Compulsory user defined input: specify whether the step1 predictions are included.
-    -istep1_file_loco_multi_pheno=file-J0pfbj8JQkyxg4b985gp8YXq   # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_pred=file-zzzzzz \                # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_loco_multi_pheno=file-zzzzzz      # Compulsory user defined input: specify whether the step1 predictions are included.
 
 
 dx run app-regenie-step2_per-variant-test \    
     --priority low \                               # Define priority of the job; recommend to start with low, then if multiple failures >5, switch to high                                     
-    --destination /PATH/ \                         # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
+    --destination project-zzzzzz:/OUTPUT_PATH/ \   # Define the destination folder for the output files; if not defined, the output will be saved in the current working directory
     --name JOBNAME \                               # Name of the job for monitoring and tracking 
     -y --brief \                                   # Run the job in the background rather than interactively in the terminal 
-    -ipheno_file=project-xxxxxx:file-XXXXXXX \     # Compulsory user defined input: input phenotype file with either full file path, or file ID    
+    -ipheno_file=project-zzzzzz:file-zzzzzz \      # Compulsory user defined input: input phenotype file with either full file path, or file ID    
     -ipheno_binary=true \                          # Compulsory user-defined input: set to true for binary phenotypes, false for quantitative phenotypes
     -ipheno_colnames=PHENO \                       # Compulsory user defined input: define the column names in the phenotype file. If multiple phenotypes are provided, please use comma-separated format, e.g. PHENO1,PHENO2,PHENO3
     -ioutput_file_prefix=OUTPUT_FILE_PREFIX \      # Compulsory user defined input: define the output file prefix, this will be appended in front of the phenotype name followed by the default file extension of the regenie output files, e.g. ${OUTPUT_FILE_PREFIX}.pheno1.regenie  
     -istep1_pred_included=true \                  
-    -istep1_file_pred=file-J0p548QJVqYqVxqQkvB49Jvx \             # Compulsory user defined input: specify whether the step1 predictions are included.
-    -istep1_file_loco_multi_pheno=file-J0pfbj8JQkyxg4b985gp8YXq   # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_pred=file-zzzzzz \                # Compulsory user defined input: specify whether the step1 predictions are included.
+    -istep1_file_loco_multi_pheno=zzzzzz           # Compulsory user defined input: specify whether the step1 predictions are included.
 
 ```
 
