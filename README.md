@@ -31,7 +31,7 @@ dx run app-ic-epid-regenie-step2_per-variant-test --help        # The app for ru
 Saving the phenotype file as uncompressed .txt or .tsv is recommended, as regenie may encounter parsing issues with compressed .gz format.
 
 - If multiple phenotypes are included, the phenotype file must contain either all binary traits or all quantitative traits, as regenie cannot process mixed phenotype types in a single run.
-- Please notes the caveates in running multiple phenotypes as one job in regenie: [missing pattern among traits](https://rgcgithub.github.io/regenie/recommendations/). 
+- Please be cautious about the potential limitations in running multiple phenotypes as one job in regenie: [missing pattern](https://rgcgithub.github.io/regenie/recommendations/). 
 - While the three tools can theoretically handle multiple phenotypes, current resource configurations have only been tested with up to 3 phenotypes. Including more may lead to resource allocation issues.
 
 Below is an example of the expected phenotype file format. The first two columns are FID and IID. The third column is the first phenotype, and the fourth and fifth columns are additional phenotypes if multiple phenotypes are included.
