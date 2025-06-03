@@ -137,17 +137,14 @@ regenie_step2 per-variant or per-gene tests
 
 
 <details>
-<summary><strong>7. For the gene-based test, how can I know the total number of carriers/the number of homozygous carriers/the number of heterozygous carriers for the variants included in a mask?</strong></summary>
+<summary><strong>7. For the gene-based test, how can I know the total number of carriers/the number of homozygous carriers/the number of heterozygous carriers for the variants included in a gene mask?</strong></summary>
 
 We currently do not have a dedicated tool for obtaining this information. However, you can extract it by following the general steps below on RAP, using either SwissArmyKnife or CloudWorkStation (recommended if you only have a short list of variants):
 
 1. For your gene mask of interest, extract the list of variants included in the mask from the `_masks.snplist` file in the regenie output.
 2. Extract these variants from the QCed WES data in PGEN format and save as VCF format. The QCed WES files are located in: `project-GyZxPF8JQkyq9JVxZjQ2FvqK:/filtered/`. 
-3. Use `bcftools +fill-tags` to annotate the VCF file with relevant information. For example:
-  ```
-  bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz -- -t AC,AF,MAF,AC_Hom,AC_Het,AC_Hemi
-  ```
-  This will add annotations such as allele count (AC), allele frequency (AF), minor allele frequency (MAF), homozygous allele count (AC_Hom), heterozygous allele count (AC_Het), and hemizygous allele count (AC_Hemi) for each variant in the VCF file.
+3. Use `bcftools +fill-tags` to annotate the VCF file with relevant information. For example:`bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz -- -t AC,AF,MAF,AC_Hom,AC_Het,AC_Hemi`. 
+   This will add annotations such as allele count (AC), allele frequency (AF), minor allele frequency (MAF), homozygous allele count (AC_Hom), heterozygous allele count (AC_Het), and hemizygous allele count (AC_Hemi) for each variant in the VCF file.
 4. For easier further analysis, you could extract the relevant fields from the annotated VCF and save them as a text file using `bcftools query -f`.
 
 
