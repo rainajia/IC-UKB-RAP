@@ -75,9 +75,6 @@ main() {
         done
     fi
 
-    ls -l step1_file_pred
-    ls -l *.loco
-
     echo "Downloading QCed WES pgen files ..."
     dx download file-J0qJ9q8JPG60JqqJbxv7Yf72 -o WES_QCed_pgen_files.tar.gz
     tar -xzvf WES_QCed_pgen_files.tar.gz
@@ -229,7 +226,6 @@ main() {
 
     rm chr*
     echo "Files left in the directory after cleanup:"
-    ls -l
 
     output_regenie_file=()
     for file in *.regenie; do
