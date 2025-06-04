@@ -1,5 +1,5 @@
 #!/bin/bash
-# ic-epid-regenie-step2_per-variant-test
+# ic-epid-regenie-step2_per-gene-test
 
 
 main() {
@@ -137,14 +137,14 @@ main() {
                     --set-list chr${chr}_set_list_file.tsv \
                     --anno-file chr${chr}_annotation_file.tsv \
                     --mask-def chr${chr}_mask_file.tsv \
-                    --aaf-bins 0.001 \
+                    --aaf-bins 0.001,0.01 \
                     --build-mask max \
                     --vc-maxAAF 0.001 \
                     --vc-tests skato \
                     --vc-MACthr 10 \
                     $binary_trait_bias_correction_method \
                     --pThresh 0.01 \
-                    --bsize 200 \
+                    --bsize 500 \
                     --threads 1 \
                     --write-mask-snplist \
                     --out chr${chr}
@@ -189,14 +189,14 @@ main() {
                     --set-list chr${chr}_set_list_file.tsv \
                     --anno-file chr${chr}_annotation_file.tsv \
                     --mask-def chr${chr}_mask_file.tsv \
-                    --aaf-bins 0.001 \
+                    --aaf-bins 0.001,0.01 \
                     --build-mask max \
                     --vc-maxAAF 0.001 \
                     --vc-tests skato \
                     --vc-MACthr 10 \
                     $binary_trait_bias_correction_method \
                     --pThresh 0.01 \
-                    --bsize 200 \
+                    --bsize 500 \
                     --threads 1 \
                     --write-mask-snplist \
                     --extract-setlist $gene_list_formatted \
