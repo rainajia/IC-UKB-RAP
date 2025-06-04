@@ -13,7 +13,7 @@ The estimated cost for the default setting using ~400K white European ancestry a
 - For step 2 genome-wide gene-based test:
   
 - For step 2 genome-wide per-variant test:
-  High priority: £1.8-£2.5, 4-5 hours
+  High priority: £1.5-£2.5, 4-5 hours
   Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)
   **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. 
 
@@ -146,6 +146,8 @@ We currently do not have a dedicated tool for obtaining this information. Howeve
 3. Use `bcftools +fill-tags` to annotate the VCF file with relevant information. For example:`bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz -- -t AC,AF,MAF,AC_Hom,AC_Het,AC_Hemi`. 
    This will add annotations such as allele count (AC), allele frequency (AF), minor allele frequency (MAF), homozygous allele count (AC_Hom), heterozygous allele count (AC_Het), and hemizygous allele count (AC_Hemi) for each variant in the VCF file.
 4. For easier further analysis, you could extract the relevant fields from the annotated VCF and save them as a text file using `bcftools query -f`.
+
+Carrier number for the variant = AC_HET + AC_HOM/2
 
 
 </details>
