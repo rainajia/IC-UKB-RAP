@@ -7,24 +7,24 @@ The estimated cost for the default setting using ~400K white European ancestry a
 
 - For regenie_step1 using the followings:
   High priority job: £1.8-£2.5, 7-8 hours
-  Low priority job: £0.5-£1.5, >8 hours of elapsed time (risk of spot instance interruptions)
-  **Recommendations**: Start with high priority to avoid spot instance interruptions since the job is long.  
+  Low priority job: £0.5-£1.5, >8 hours of elapsed time (risk of spot instance interruptions)<br><br>
+  **Recommendations**: Start with high priority to avoid spot instance interruptions since.  
 
 - For step 2 genome-wide gene-based test:
   High priority job: £1.5-£2, 6-7 hours 
-  Low priority job: £0.5-£1.5, >6 hours of elapsed time (risk of spot instance interruptions)
+  Low priority job: £0.5-£1.5, >6 hours of elapsed time (risk of spot instance interruptions)<br><br>
   **Recommendations**: Use high priority for genome-wide test, and low priority for gene-specific test (e.g. a list of 10 gene takes less than 20 mins).  
 
 - For step 2 genome-wide per-variant test:
   High priority: £1.5-£2.5, 4-5 hours
-  Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)
+  Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)<br><br>
   **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. 
 
 Factors that will affect run time and cost:
 
 ***Definition for "job priority"***
-  - Low priority is recommended for gene-based tests as a start.
-  - High priority is recommended for step 1 and step 2, unless the job is ran a sample <100K.
+  - High priority is recommended for step 1 and step 2 for genome-wide jobs unless a smaller cohort <50K is included.
+  - Low priroity is recommended for gene-based jobs if only a small list of genes are included. 
 
 ***Sample size***
   - Smaller samples will run quicker.
@@ -41,6 +41,7 @@ Factors that will affect run time and cost:
 
 <details>
 <summary><strong>2. What quality checkes has been done for the raw seuqencing data? </strong></summary> 
+
 Please refer to the method documentation file [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
 
 </details>
