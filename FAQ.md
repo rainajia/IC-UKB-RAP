@@ -6,12 +6,15 @@
 The estimated cost for the default setting using ~400K white European ancestry are as the follows: 
 
 - For regenie_step1 using the followings:
-  High priority job: £1.8-£2.5, 7-8 hours 
-  Low priority job: £0.5-£1.5, >8 hours (risk of spot instance interruptions)
+  High priority job: £1.8-£2.5, 7-8 hours
+  Low priority job: £0.5-£1.5, >8 hours of elapsed time (risk of spot instance interruptions)
   **Recommendations**: Start with high priority to avoid spot instance interruptions since the job is long.  
 
 - For step 2 genome-wide gene-based test:
-  
+  High priority job: £1.5-£2, 6-7 hours 
+  Low priority job: £0.5-£1.5, >6 hours of elapsed time (risk of spot instance interruptions)
+  **Recommendations**: Use high priority for genome-wide test, and low priority for gene-specific test (e.g. a list of 10 gene takes less than 20 mins).  
+
 - For step 2 genome-wide per-variant test:
   High priority: £1.5-£2.5, 4-5 hours
   Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)
@@ -38,15 +41,16 @@ Factors that will affect run time and cost:
 
 <details>
 <summary><strong>2. What quality checkes has been done for the raw seuqencing data? </strong></summary> 
+Yes, the syntax is almost correct, but there should be a space between the closing parenthesis of the link and the note in parentheses. Here is the corrected markdown:
 
-Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
+Please refer to the method documentation file [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
 
 </details>
 
 <details>
   <summary><strong>3. In the gene-based tests, how are the gene "masks" defined?</strong></summary>
 
-Please refer to the method documentation file [method.doc link to be added] (access for IC internal users only).
+Please refer to the method documentation file [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
 
 
 </details>
