@@ -41,8 +41,6 @@ Factors that will affect run time and cost:
 
 <details>
 <summary><strong>2. What quality checkes has been done for the raw seuqencing data? </strong></summary> 
-Yes, the syntax is almost correct, but there should be a space between the closing parenthesis of the link and the note in parentheses. Here is the corrected markdown:
-
 Please refer to the method documentation file [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
 
 </details>
