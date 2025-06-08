@@ -3,17 +3,17 @@
 <details>
 <summary><strong>1. What are the expected cost and runtime for step 1 and step 2?</strong></summary>
 
-The estimated cost for the default setting using ~400K white European ancestry are as the follows: 
+The estimated cost for genome-wide jobs in ~400K white European ancestry samples using the default setting are as the follows: 
 
-- For regenie_step1 using the followings:
+- For regenie_step1:
   High priority job: £1.8-£2.5, 7-8 hours
-  Low priority job: £0.5-£1.5, >8 hours of elapsed time (risk of spot instance interruptions)<br><br>
+  Low priority job: £0.5-£1.5, >7.5 hours of elapsed time (risk of spot instance interruptions)<br><br>
   **Recommendations**: Start with high priority to avoid spot instance interruptions since.  
 
 - For step 2 genome-wide gene-based test:
-  High priority job: £1.5-£2, 6-7 hours 
-  Low priority job: £0.5-£1.5, >6 hours of elapsed time (risk of spot instance interruptions)<br><br>
-  **Recommendations**: Use high priority for genome-wide test, and low priority for gene-specific test (e.g. a list of 10 gene takes less than 20 mins).  
+  High priority job: £2-3, 4-5 hours 
+  Low priority job: £0.5-£1, >4 hours of elapsed time (risk of spot instance interruptions)<br><br>
+  **Recommendations**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. Use low priority if only a list of genes are tested (e.g. a list of 10 gene takes less than 20 mins).  
 
 - For step 2 genome-wide per-variant test:
   High priority: £1.5-£2.5, 4-5 hours
