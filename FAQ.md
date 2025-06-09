@@ -20,6 +20,7 @@ The estimated cost for genome-wide jobs in ~400K white European ancestry samples
   Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)<br><br>
   **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. 
 
+
 Factors that will affect run time and cost:
 
 ***Definition for "job priority"***
@@ -42,14 +43,14 @@ Factors that will affect run time and cost:
 <details>
 <summary><strong>2. What quality checkes has been done for the raw seuqencing data? </strong></summary> 
 
-Please refer to the method documentation file [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
+Please refer to the method documentation [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
 
 </details>
 
 <details>
   <summary><strong>3. In the gene-based tests, how are the gene "masks" defined?</strong></summary>
 
-Please refer to the method documentation file [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
+Please refer to the method documentation [Method.doc](https://imperiallondon-my.sharepoint.com/:w:/g/personal/yjia2_ic_ac_uk/ESCl98tv1oBJoQu2-3aSYSABEB-V5octWrN16b5EdyKJjA?e=SFReYr) (access for internal users only).
 
 
 </details>
