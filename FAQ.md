@@ -18,7 +18,7 @@ The estimated cost for genome-wide jobs in ~400K white European ancestry samples
 - For step 2 genome-wide per-variant test: <br><br>
   High priority: £1.5-£2.5, 4.5 hours <br><br>
   Low priority:£0.5-£1.5, >4.5 hours (risk of spot interruptions)<br><br>
-  **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. 
+  **Recommendation**: Start with low priority, switch to high priority if job is interrupted with more than 3 tries. <br><br>
 
 
 Factors that will affect run time and cost:
@@ -34,7 +34,7 @@ Factors that will affect run time and cost:
   - Regenie allows mutliple phenotypes to be included in one job as a means to improve computation efficiency, however, increasing the phenotypes will non-linearly affect the runtime, especitally for regenie step 1. Please note that the current app resource configuration has not been tested in a job with more than 3 phenotypes. 
   
 ***For gene-based test, gene-specific jobs with a defined list of genes will be significantly quicker to run than genome-wide jobs***
-  - If a list of genes are provided, the step2 gene-based test will be quicker to run 
+  - If a list of genes are provided, the step2 gene-based test will be quicker to run <br><br>
 
 
 </details>
@@ -59,25 +59,33 @@ Please refer to the method documentation [Method.doc](https://imperiallondon-my.
 <details>
    <summary><strong>4. How do I know what are the default input files that has been used in the app, and whether I can change them?</strong></summary>
 
-For regenie step 1 genotype file input (QCed genotype array data in GRCh38), the default genotype input file can be optionally changed to user-defined genotype files in BGEN format, using the following options:
+For detailed information about the full list of optional parameters and the required input format in the three apps, please see:
+
+  ```bash
+    dx run app-name --help
+  ```
+
+Breifly, for regenie step 1 and 2, covariates and individual list for inclusion can be optionally modified when running the apps:
+    - Covariate file  (**Note:** the default is to adjust for sex, age, age2, PC1-10 and WES batches)
+    - Sample inclusion file (**Note:** the default is to use the white EU ancestry only)
+
+For step1, the default genotype file (UKB genotype array in GRCh38) can be optionally changed to user-defined genotype files in BGEN format with the following options:
 
   ```
     -igenotype_bgen_file
     -igenotype_sample_file
   ```
 
-For regenie step 2 genotype file input (QCed WES data in GRCh38), the default genotype file in PGEN format is hardcoded into the app. File IDs can be viewed in the scripts shared in the `scripts/` folder in this repository. Only authorised users will be able to use these files from antoher proejct directory.
+For step 2 per-variant test, the default genotype file (UKB WES in GRCh38) can be optionally changed to user-defined genotype files in PGEN format with the following options:
 
-For both regenie step 1 and 2, the following files can also be optionally modified when running the apps:
-    - Covariate file 
-    - Sample inclusion file (**Note:** the default is to use the white EU ancestry only)
-
-For detailed information about optional parameters within the three apps, please see:
-
-  ```bash
-    dx run app-name --help
+  ```
+    -igenotype_pgen_file_tarball
+    -igenotype_pgen_file_prefix
   ```
 
+For step 2 per-gene-test, the genotype file input (QCed WES data in GRCh38) is hard-coded into the app and cannot be changed. <br><br>
+
+All the default files used can be found either in the app --help descriptionso r in the `scripts/` folder in this repository. Only authorised users will be able to view these files. <br><br>
 
 </details>
 
@@ -85,7 +93,7 @@ For detailed information about optional parameters within the three apps, please
 <details>
   <summary><strong>5. What output files should I expect to get from each tool?</strong></summary>
 
-The output files from each tool follow the naming formats below. For more information regarding regenie output files, please refer to regenie documentations. 
+The output files from each tool follow the format demonstrated below. For more information regarding regenie output files, please refer to the regenie documentation. 
 
 regenie_step1
 
@@ -93,7 +101,7 @@ regenie_step1
   |----------------------------------|-----------------------------------------------------|
   | `${output_file_prefix}_pred.list` | Contains a list of the `.loco` files to use for step 2 |
   | `${output_file_prefix}_1.loco`    | Contains the phenotype predictions                  |
-  | `${output_file_prefix}.log`       | Log file for the job run                            |
+  | `${output_file_prefix}.log`       | Log file for the job                            |
 
 **Notes**:
   - If multiple phenotypes are included, each phenotype will be saved as a separate '.loco' file in the format: for ***P*** phenotypes, there will be `${output_file_prefix}_1.loco,${output_file_prefix}_2.loco, ${output_file_prefix}_3.loco, ${output_file_prefix}_P.loco` output files.
@@ -105,10 +113,10 @@ regenie_step2 per-variant or per-gene tests
   |------------------------------------------------------------------|-----------------------------------------------------|
   | `${output_file_prefix}_${phenotype_colnames}_autosomes.regenie`  | Association test results                            |
   | `${output_file_prefix}_autosomes.log`                            | Log file for the association test run               |
-  | `${output_file_prefix}_autosomes_masks.snplist`                  | List of variants in each defined mask for downstream analysis |
+  | `${output_file_prefix}_autosomes_masks.snplist`                  | List of variants in each defined mask for each gene |
 
 **Notes**:
-  - If multiple phenotypes are included, each phenotype will be saved as a separate '.regenie' file. Each job will only have 1 .log file and one .snplist file. 
+  - If multiple phenotypes are included, each phenotype will be saved as a separate '.regenie' file. Each job will only have one ".log" file and one ".snplist" file. 
   - If a list of genes are provided for the gene-based test, the output file name will be the same with the association test results for only the genes defined. 
 
 
@@ -118,24 +126,23 @@ regenie_step2 per-variant or per-gene tests
 <details>
 <summary><strong>6. For the gene-based test, how do I interpret the columns from the regenie output?</strong></summary>
 
-  The output columns can be interpreted as the follows. Note that the user needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
+  The output columns can be interpreted as the following. User needs to decide which mask, MAF threshold, and test methods to focus on based on their own study context and objectives.
 
    | Column Name         | Description                |
    |---------------------|---------------------------|
-   | SYMBOL   | gene name         |
+   | SYMBOL  | gene name         |
    | GENE    | Ensembl  gene ID         |
    | CHROM   | chromosome of the gene   |
-   | GENPOS  | the transcription start site of the gene |
+   | GENPOS  | here regenie outputs the POS for the first variant included in the mask for the gene |
    | MASK    | the pre-defined masks for collapsing variants   |
-   | MAF     | the pre-defined minor allele frequency threshold: singletons, 0.1% |
+   | MAF     | the pre-defined minor allele frequency threshold: singletons, 0.1%, 1% |
    | TEST    | the collapsing methods used: burden, SKAT, SKTA-O |
    | N       | total sample size |
-   | BETA    | coeffient estimat, note this is log(odd) if binary trait |
+   | BETA    | coeffient estimate; notes that this is log(odd) if binary trait |
    | SE      | standard error |
    | CHISQ   | Chi-squared test |
    | LOG10P  | -log10(P)        |
    | P | p-value |
-
 
 </details>
 
