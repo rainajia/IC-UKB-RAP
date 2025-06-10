@@ -138,7 +138,7 @@ regenie_step2 per-variant or per-gene tests
    | MAF     | the pre-defined minor allele frequency threshold: singletons, 0.1%, 1% |
    | TEST    | the collapsing methods used: burden, SKAT, SKTA-O |
    | N       | total sample size |
-   | BETA    | coeffient estimate; notes that this is log(odd) if binary trait |
+   | BETA    | coeffient estimate; note that this is log(odd) if binary trait |
    | SE      | standard error |
    | CHISQ   | Chi-squared test |
    | LOG10P  | -log10(P)        |
