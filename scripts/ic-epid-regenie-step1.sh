@@ -3,6 +3,16 @@
 # Developed as the app ic-epid-regenie-step1
 
 main() {
+
+    #Set up the assest environment
+if [[ "$DX_RESOURCES_ID" != "" ]]; then
+  DX_ASSETS_ID="$DX_RESOURCES_ID"
+else
+  DX_ASSETS_ID="$DX_PROJECT_CONTEXT_ID"
+fic
+
+echo "Using DX_ASSETS_ID: $DX_ASSETS_ID"
+
         # Validate required inputs
     if [ -z "$pheno_file" ] || [ -z "$output_file_prefix" ] || [ -z "$pheno_colnames" ]; then
         dx-jobutil-report-error "Required inputs are missing"
@@ -21,7 +31,7 @@ main() {
     then
         dx download "$covar_file" -o covar_file
         else
-        dx download project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-J0gJ8QjJQkyz4pgyF4PyGBZy -o covar_file # base covar file (default)
+        dx download $DX_ASSETS_ID:/file-J0gJ8QjJQkyz4pgyF4PyGBZy -o covar_file # base covar file (default)
     fi
     echo "Value of covar_file: '$covar_file'"
     
@@ -29,7 +39,7 @@ main() {
     then
         dx download "$sample_include_file" -o sample_include_file
         else
-        dx download project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-GzG8Gf8JQkyzfP4FyFpJkkvq -o sample_include_file # EU all sample list  -o sample_include
+        dx download $DX_ASSETS_ID:/file-GzG8Gf8JQkyzfP4FyFpJkkvq -o sample_include_file # EU all sample list  -o sample_include
     fi
         echo "Value of sample_include_file: '$sample_include_file'"
 
@@ -42,22 +52,21 @@ main() {
         covar_colnames_categorical="WES_batch"
    fi
 
-    echo "Downloading the mendatory genotype bgen and files (recommended to use the default)..."
+    echo "Downloading the genotype bgen and files (recommended to use the default)..."
 
      if [ -n "$genotype_bgen_file" ]
     then
         dx download "$genotype_bgen_file" -o genotype_bgen_file.bgen
         else
-        dx download project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-J03y7P8JV2F1gfxXb52PP4vk -o genotype_bgen_file.bgen # QCed and lifted (default)
+        dx download $DX_ASSETS_ID:/file-J03y7P8JV2F1gfxXb52PP4vk -o genotype_bgen_file.bgen # QCed and lifted (default)
     fi
 
      if [ -n "$genotype_sample_file" ]
     then
         dx download "$genotype_sample_file" -o genotype_sample_file.sample
         else
-        dx download project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-J03y7P8JV2F28F50kjq1j5jV -o genotype_sample_file.sample  #(default)
+        dx download $DX_ASSETS_ID:/file-J03y7P8JV2F28F50kjq1j5jV -o genotype_sample_file.sample  #(default)
     fi
-
 
 
    echo "Start loading regenie" 
@@ -91,6 +100,18 @@ main() {
     --out $output_file_prefix
     
     echo "Regenie step1 completed. Uploading output files."
+
+    # Check if regenie completed successfully
+if [ $? -ne 0 ]; then
+    dx-jobutil-report-error "Regenie step 1 failed"
+    exit 1
+fi
+
+# Add file existence checks
+if ! ls *.loco &>/dev/null; then
+    dx-jobutil-report-error "No .loco files found after regenie completed"
+    exit 1
+fi
 
     # Note that this entire bash script is executed with -e
     # when running in the cloud, so any line which returns a nonzero

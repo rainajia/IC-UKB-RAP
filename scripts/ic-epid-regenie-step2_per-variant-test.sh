@@ -1,7 +1,16 @@
 #!/bin/bash
-# ic-epid-regenie-step2_per-variant-test 
+# ic-epid-regenie-step2_per-variant-test
+
 
 main() {
+    #Set up the assest environment
+if [[ "$DX_RESOURCES_ID" != "" ]]; then
+  DX_ASSETS_ID="$DX_RESOURCES_ID"
+else
+  DX_ASSETS_ID="$DX_PROJECT_CONTEXT_ID"
+fi
+
+echo "Using DX_ASSETS_ID: $DX_ASSETS_ID"
 
     echo "Downloading input files..."
 
@@ -26,7 +35,7 @@ main() {
         dx download "$covar_file" -o covar_file
         else
         echo "Downloading covar_file: default covar file used "
-        dx download project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-J0gJ8QjJQkyz4pgyF4PyGBZy -o covar_file # base covar file (default)
+        dx download $DX_ASSETS_ID:/file-J0gJ8QjJQkyz4pgyF4PyGBZy -o covar_file # base covar file (default)
     fi
 
     
@@ -36,7 +45,7 @@ main() {
         dx download "$sample_include_file" -o sample_include_file
         else
         echo "Donwloading sample_include_file: default sample include file used "
-        dx download project-GyZxPF8JQkyq9JVxZjQ2FvqK:file-GzG8Gf8JQkyzfP4FyFpJkkvq -o sample_include_file # EU ancestry sample list (default)
+        dx download $DX_ASSETS_ID:/file-GzG8Gf8JQkyzfP4FyFpJkkvq -o sample_include_file # EU all sample list (default)
     fi
 
     if [ -z "$covar_colnames_continuous" ]; then
@@ -53,43 +62,53 @@ main() {
         echo "Value of covar_colnames_categorical: '$covar_colnames_categorical'"
    fi
 
-   if [ -z "$covar_colnames_categorical" ]; then
-        echo "Value of covar_colnames_continuous: default covariates used."
-        covar_colnames_categorical="WES_batch"
-        else
-        echo "Value of covar_colnames_categorical: '$covar_colnames_categorical'"
-   fi
-
       if [ -z "$step1_pred_included" ]; then
         echo "Is step 1 predictions included: false (default)"
         else
         echo "Is step 1 predictions included: $step1_pred_included"
    fi
 
-
- if [ -n "$step1_file_pred" ]
-    then
+   if [ -n "$step1_file_pred" ]
+     then
        echo "Downloading step 1 _pred.list file: '$step1_file_pred'"
         dx download "$step1_file_pred" -o  step1_file_pred
+            if [ ! -f step1_file_pred ]; then
+        echo "Error: step1_file_pred does not exist."
+        exit 1
+    else
+        ls -l step1_file_pred
+    fi
     fi
 
- if [ -n "$step1_file_loco_one_pheno" ]
-    then
-        echo "Donwloing loco file for single phenotype: '$step1_file_loco_one_pheno"
-        dx download "$step1_file_loco_one_pheno"
+    if [ -n "$step1_file_loco_one_pheno" ]; then
+       echo "Downloading loco file for single phenotype: '$step1_file_loco_one_pheno'"
+       dx download "$step1_file_loco_one_pheno"
+    # print the name of the downloaded file
+    if [ ! -f *.loco ]; then
+        echo "Error: No .loco files found."
+        exit 1
+    else
+        ls -l *.loco
+        fi
     fi
 
- if [ -n "$step1_file_loco_multi_pheno" ]; then
+if [ -n "$step1_file_loco_multi_pheno" ]; then
     dx download "$step1_file_loco_multi_pheno" -o loco_files.list
     mapfile -t loco_files_array < loco_files.list
+    
     for loco_file in "${loco_files_array[@]}"; do
         echo "Downloading loco file for multiple phenotypes: '$loco_file'"
         dx download "$loco_file"
-    done
+        ## check pred and loco files 
+    done 
+        
+    if [ ! -f *.loco ]; then
+        echo "Error: No .loco files found."
+        exit 1
+    else
+        ls -l *.loco
+    fi
 fi
-    ## check pred and loco files 
-    ls -l step1_file_pred
-    ls -l *.loco
 
 if [ -z "$minMAC" ]; then
         echo "Minimum MAC included for variants: 5 (default)"
@@ -99,32 +118,46 @@ if [ -z "$minMAC" ]; then
    fi
 
 
-# Download bgen files by chromosomes ###############################
+# Download pgen files by chromosomes
+echo "Downloading genotype pgen files..."
 
-## if step1_pred_included is true, then include the --pred flag
+    if [ -n "$genotype_pgen_file_tarball" ];
+    then
+        dx download "$genotype_pgen_file_tarball" -o WES_QCed_pgen_files.tar.gz
+        tar --no-same-owner -xzvf WES_QCed_pgen_files.tar.gz
+     
+        if [ -z "$genotype_pgen_file_prefix" ]; then
+        echo "Customised genotype pgen files are used, but --igenotype_pgen_file_prefix input is missing."
+        exit 1
+        else
+        echo "Genotype file by chromosomes with the file prefix = $genotype_pgen_file_prefix"
+        fi
 
-echo "Start loading regenie" 
+        else
+        dx download $DX_ASSETS_ID:/file-J0qJ9q8JPG60JqqJbxv7Yf72 -o WES_QCed_pgen_files.tar.gz # QCed and lifted (default)
+        tar -xzvf WES_QCed_pgen_files.tar.gz
+    fi
+
+
+echo "Start running regenie..." 
 export PATH=$PATH:/usr/bin/regenie_v4.1.gz_x86_64_Linux
 
 
-## Load the hardedcoded QCed WES pgen files
-echo "Downloading all hardcoded pgen files..."
-dx download file-J0qJ9q8JPG60JqqJbxv7Yf72 -o WES_QCed_pgen_files.tar.gz
-tar -xzvf WES_QCed_pgen_files.tar.gz
-
-## parse pheno_colnames by comma, then make a directory for each phenotype
-# Convert comma-separated string to array
-IFS=',' read -ra pheno_array <<< "$pheno_colnames"
-
-
-MAX_JOBS=8  # Maximum number of parallel jobs
+MAX_JOBS=8
 JOBS_RUNNING=0
 
 for chr in {1..22}; do
   (
     echo "Processing chromosome $chr"
 
-    pgen_file_prefix="ukb23158_c${chr}_b0_v1_QCed"
+    if [ -z "$genotype_pgen_file_prefix" ]; then
+        pgen_file_prefix="ukb23158_c${chr}_b0_v1_QCed"
+     else
+        pgen_file_prefix="${genotype_pgen_file_prefix}_chr${chr}"
+    fi
+
+
+    echo "Running regenie for the pgen file prefix: $pgen_file_prefix"
 
     # Check if step1_pred_file is set
     if [ "$step1_pred_included" = "true" ]; then
@@ -141,7 +174,6 @@ for chr in {1..22}; do
     fi
 
     # Run regenie
-    echo "Running regenie for QCed pgen file prefix: $pgen_file_prefix"
     regenie_v4.1.gz_x86_64_Linux \
       --step 2 \
       $pred_flag \
@@ -187,14 +219,22 @@ if [ -f "/usr/bin/process_regenie_output.py" ]; then
     fi
 else
     echo "Warning: Python script not found."
+    # Add fallback file combining code
 fi
 
 
-#  Start processing output files and clean up temporary files
-    rm chr*
+    # Note however that this entire bash script is executed with -e
+    # when running in the cloud, so any line which returns a nonzero
+    # exit code will prematurely exit the script; if no error was
+    # reported in the job_error.json file, then the failure reason
+    # will be AppInternalError with a generic error message.
+
+
+# Processing output files as arrays
     echo "results files are ready to be uploaded."
-    echo "Files left in the directory after cleanup:"
-    ls -l
+
+    # remove all files starting with "chr" to be uploaded
+    rm chr*
 
 # initialize arrays to hold the output file IDs    
 output_regenie_file=()
