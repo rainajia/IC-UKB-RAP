@@ -1,6 +1,26 @@
 # FAQ
 
 <details>
+<summary><strong>0. What kind of task can you work on?</strong></summary>
+
+This pipeline supports the following types of association analysis tasks using UKB WES 470K data on the RAP:
+
+1. **Quick gene screening** – Run a gene-based association test for a short, user-defined list of genes without regenie step 1. Useful for rapid exploratory analysis of specific genes of interest.
+
+2. **Quick genome-wide gene-based test** – Run a genome-wide gene-collapsing (burden/SKAT/SKAT-O) association test without regenie step 1. Suitable for initial genome-wide screens where population stratification adjustment is not required.
+
+3. **Genome-wide gene-based association test with step 1 output** – Run regenie step 1 followed by a genome-wide gene-based test using the step 1 predictions. This is the recommended approach for final results, as step 1 adjusts for population stratification and cryptic relatedness.
+
+4. **Genome-wide variant-level association test (ExWAS) with step 1 output** – Run regenie step 1 followed by a per-variant (ExWAS) association test using the step 1 predictions. This is the recommended approach for final variant-level results.
+
+All tasks support both **binary** (case/control) and **quantitative** phenotypes. Multiple phenotypes can be included in a single run (tested with up to 3 phenotypes).
+
+For detailed instructions on how to run each task, please refer to the [README](README.md).
+
+</details>
+
+
+<details>
 <summary><strong>1. What are the expected cost and runtime for step 1 and step 2?</strong></summary>
 
 The estimated cost for genome-wide jobs in ~400K white European ancestry samples using the default setting are as the follows: 
